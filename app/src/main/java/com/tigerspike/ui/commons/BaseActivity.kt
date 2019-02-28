@@ -1,4 +1,4 @@
-package com.tigerspike.ui.base
+package com.tigerspike.ui.commons
 
 import android.app.Activity
 import android.os.Bundle
