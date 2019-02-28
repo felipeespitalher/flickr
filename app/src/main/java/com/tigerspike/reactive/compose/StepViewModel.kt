@@ -1,6 +1,8 @@
 package com.tigerspike.reactive.compose
 
 import com.tigerspike.data.output.ErrorOutput
+import com.tigerspike.reactive.Either
+import com.tigerspike.reactive.TransformerEitherApi
 import io.reactivex.Single
 import io.reactivex.SingleSource
 import io.reactivex.SingleTransformer

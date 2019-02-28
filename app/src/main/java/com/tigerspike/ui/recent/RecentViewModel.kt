@@ -6,7 +6,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.tigerspike.data.repository.PhotoRepository
 import com.tigerspike.reactive.compose.StepLoadingState
 import com.tigerspike.reactive.compose.StepViewModel
-import com.tigerspike.reactive.compose.subscribeByEither
+import com.tigerspike.reactive.subscribeByEither
 import com.tigerspike.ui.commons.BaseViewModel
 import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject

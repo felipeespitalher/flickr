@@ -1,4 +1,4 @@
-package com.tigerspike.reactive.compose
+package com.tigerspike.reactive
 
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -45,67 +45,67 @@ fun <E, V, M> Either<E, V>.mapError(errorMapper: (E) -> M): Either<M, V> = when 
 }
 
 fun <E, V, M> Single<Either<E, V>>.mapEitherValue(valueMapper: (V) -> M): Single<Either<E, M>> =
-        this.map { either ->
-            when (either) {
-                is Either.Error -> either
-                is Either.Value -> either.mapValue(valueMapper)
-            }
+    this.map { either ->
+        when (either) {
+            is Either.Error -> either
+            is Either.Value -> either.mapValue(valueMapper)
         }
+    }
 
 fun <E, V, M> Single<Either<E, V>>.mapEitherError(errorMapper: (E) -> M): Single<Either<M, V>> =
-        this.map { either ->
-            when (either) {
-                is Either.Error -> either.mapError(errorMapper)
-                is Either.Value -> either
-            }
+    this.map { either ->
+        when (either) {
+            is Either.Error -> either.mapError(errorMapper)
+            is Either.Value -> either
         }
+    }
 
 @CheckReturnValue
 fun <A : Either<E, D>, E, D> Single<A>.subscribeByEither(
-        onError: (E?) -> Unit,
-        onSuccess: (D) -> Unit
+    onError: (E?) -> Unit,
+    onSuccess: (D) -> Unit
 ): Disposable {
 
     return subscribeBy(
-            onError = {
-                onError(null)
-            },
-            onSuccess = { eitherResource ->
-                eitherResource.either(
-                        error = {
-                            onError(it)
-                        },
-                        value = {
-                            onSuccess(it)
-                        }
-                )
-            }
+        onError = {
+            onError(null)
+        },
+        onSuccess = { eitherResource ->
+            eitherResource.either(
+                error = {
+                    onError(it)
+                },
+                value = {
+                    onSuccess(it)
+                }
+            )
+        }
     )
 }
 
 @CheckReturnValue
 fun <A : Either<E, D>, E, D> Observable<A>.subscribeByEither(
-        onError: (E?) -> Unit,
-        onNext: (D) -> Unit,
-        onComplete: () -> Unit
+    onError: (E?) -> Unit,
+    onNext: (D) -> Unit,
+    onComplete: () -> Unit
 ): Disposable {
 
     return subscribeBy(
-            onError = {
-                onError(null)
-            },
-            onNext = { eitherResource ->
-                eitherResource.either(
-                        error = {
-                            onError(it)
-                        },
-                        value = {
-                            onNext(it)
-                        }
-                )
-            },
-            onComplete = {
-                onComplete()
-            }
+        onError = {
+            onError(null)
+        },
+        onNext = { eitherResource ->
+            eitherResource.either(
+                error = {
+                    onError(it)
+                },
+                value = {
+                    onNext(it)
+                }
+            )
+        },
+        onComplete = {
+            onComplete()
+        }
     )
 }

@@ -1,5 +1,7 @@
 package com.tigerspike.reactive.compose
 
+import com.tigerspike.reactive.Either
+import com.tigerspike.reactive.error
 import io.reactivex.*
 import timber.log.Timber
 

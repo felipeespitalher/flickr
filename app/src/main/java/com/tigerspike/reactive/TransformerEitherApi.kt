@@ -1,4 +1,4 @@
-package com.tigerspike.reactive.compose
+package com.tigerspike.reactive
 
 import com.tigerspike.data.output.ErrorOutput
 import com.tigerspike.data.output.getApiError

@@ -1,4 +1,4 @@
-package com.tigerspike.reactive.compose
+package com.tigerspike.reactive
 
 import io.reactivex.*
 
