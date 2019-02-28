@@ -2,13 +2,14 @@ package com.tigerspike.data.repository
 
 import com.tigerspike.data.FlickrApi
 import io.reactivex.Completable
+import io.reactivex.Single
 import javax.inject.Inject
 
-class PhotoRepostory @Inject constructor(
+class PhotoRepository @Inject constructor(
     private val flickrApi: FlickrApi
 ) {
 
-    fun fetchRecentPhotos(): Completable {
+    fun fetchRecentPhotos(): Single<Unit> {
         return flickrApi.fetchRecentPhotos()
     }
 

@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.tigerspike.R
 import com.tigerspike.databinding.ActivityMainBinding
 import com.tigerspike.di.AppContext
@@ -38,7 +40,26 @@ class RecentActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@RecentActivity)
+            addDividers(this)
+        }
+    }
+
+    private fun addDividers(recyclerView: RecyclerView) {
+        val verticalDividerItemDecoration = DividerItemDecoration(
+                this, DividerItemDecoration.VERTICAL
+        ).apply {
+            setDrawable(resources.getDrawable(R.drawable.vertical_divider))
+        }
+        recyclerView.addItemDecoration(verticalDividerItemDecoration)
+
+        val horizontalDividerItemDecoration = DividerItemDecoration(
+                this, DividerItemDecoration.HORIZONTAL
+        ).apply {
+            setDrawable(resources.getDrawable(R.drawable.horizontal_divider))
+        }
+        recyclerView.addItemDecoration(horizontalDividerItemDecoration)
     }
 
     private fun observeEvents() {

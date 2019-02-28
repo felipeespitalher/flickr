@@ -48,7 +48,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     def arch_components_version = '2.0.0'
     implementation "androidx.lifecycle:lifecycle-extensions:$arch_components_version"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$arch_components_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$arch_components_version"
     testImplementation "androidx.arch.core:core-testing:$arch_components_version"
 
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -63,9 +63,14 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.0.2'
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
-    implementation 'com.squareup.okio:okio:1.15.0'
+    implementation 'com.squareup.okio:okio:1.16.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     implementation "com.squareup.retrofit2:converter-moshi:2.5.0"
+
+    // Json
+    def moshi_verion = '1.8.0'
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_verion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_verion"
 
     // RX
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
@@ -78,4 +83,7 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.11.1")
     testImplementation "io.mockk:mockk:1.8.9"
     testImplementation "androidx.test:core:1.1.0"
+
+    // Log
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }
