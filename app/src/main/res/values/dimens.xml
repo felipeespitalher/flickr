@@ -1,3 +1,3 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
+    <integer name="galleryColumns">2</integer>
 </resources>

@@ -4,10 +4,12 @@ import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import com.tigerspike.data.repository.PhotoRepository
+import com.tigerspike.model.Photo
 import com.tigerspike.reactive.compose.StepLoadingState
 import com.tigerspike.reactive.compose.StepViewModel
 import com.tigerspike.reactive.subscribeByEither
 import com.tigerspike.ui.commons.BaseViewModel
+import com.tigerspike.ui.commons.SingleEventLiveData
 import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject
 
@@ -15,6 +17,7 @@ class RecentViewModel @Inject constructor(
     private val photoRepository: PhotoRepository
 ) : BaseViewModel() {
 
+    val dataEvent = SingleEventLiveData<List<Photo>>()
     val loading = ObservableBoolean()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
@@ -26,11 +29,13 @@ class RecentViewModel @Inject constructor(
             })
             .compose(StepViewModel())
             .subscribeByEither(
-                onError = {
-
+                onError = { error ->
+                    error?.let {
+                        errorEvent.set(it.message)
+                    }
                 },
                 onSuccess = {
-
+                    dataEvent.set(it)
                 }
             )
             .addTo(compositeDisposable)

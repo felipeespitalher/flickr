@@ -7,7 +7,7 @@ import java.net.UnknownHostException
 
 @JsonClass(generateAdapter = true)
 data class ErrorOutput(
-    var message: String?,
+    var message: String,
     var rootException: Throwable? = null
 ) {
 
@@ -23,7 +23,7 @@ data class ErrorOutput(
     }
 
     override fun hashCode(): Int {
-        return message?.hashCode() ?: 0
+        return message.hashCode()
     }
 
     fun isConnectivityError() = rootException is UnknownHostException

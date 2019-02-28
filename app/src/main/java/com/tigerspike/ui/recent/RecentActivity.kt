@@ -1,6 +1,7 @@
 package com.tigerspike.ui.recent
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tigerspike.R
 import com.tigerspike.databinding.ActivityMainBinding
 import com.tigerspike.di.AppContext
+import com.tigerspike.ui.commons.EventObserver
 import javax.inject.Inject
 
 class RecentActivity : AppCompatActivity() {
@@ -42,20 +44,22 @@ class RecentActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@RecentActivity)
+//                .grid(resources.getInteger(R.integer.galleryColumns))
+
             addDividers(this)
         }
     }
 
     private fun addDividers(recyclerView: RecyclerView) {
         val verticalDividerItemDecoration = DividerItemDecoration(
-                this, DividerItemDecoration.VERTICAL
+            this, DividerItemDecoration.VERTICAL
         ).apply {
             setDrawable(resources.getDrawable(R.drawable.vertical_divider))
         }
         recyclerView.addItemDecoration(verticalDividerItemDecoration)
 
         val horizontalDividerItemDecoration = DividerItemDecoration(
-                this, DividerItemDecoration.HORIZONTAL
+            this, DividerItemDecoration.HORIZONTAL
         ).apply {
             setDrawable(resources.getDrawable(R.drawable.horizontal_divider))
         }
@@ -63,7 +67,15 @@ class RecentActivity : AppCompatActivity() {
     }
 
     private fun observeEvents() {
-        //TODO: Add events
+
+        viewModel.errorEvent.observe(this, EventObserver {
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+        })
+
+        viewModel.dataEvent.observe(this, EventObserver {
+            val adapter = binding.recyclerView.adapter
+        })
+
     }
 
 }
