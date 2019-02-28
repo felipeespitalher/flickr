@@ -1,11 +1,11 @@
-package com.tigerspike.view
+package com.tigerspike.ui.base
 
 import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class AbstractViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
     val disposables = CompositeDisposable()
 

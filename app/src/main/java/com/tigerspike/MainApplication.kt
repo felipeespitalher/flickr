@@ -1,15 +1,18 @@
 package com.tigerspike
 
 import android.app.Application
-import com.tigerspike.di.mainModule
-import com.tigerspike.di.networkModule
-import org.koin.android.ext.android.startKoin
+import com.tigerspike.di.AppContext
+import com.tigerspike.di.DaggerAppComponent
 
 class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        startKoin(this, mainModule + networkModule)
+        setupDagger()
+    }
+
+    private fun setupDagger() {
+        AppContext.component = DaggerAppComponent.builder().build()
     }
 
 }

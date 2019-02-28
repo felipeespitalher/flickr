@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
+apply plugin: 'kotlin-kapt'
 apply from: 'jacoco.gradle'
 
 android {
@@ -14,7 +14,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "API_BASE_URL", "\"https://api.flickr.com/services/feeds/photos_public.gne\""
+        buildConfigField "String", "API_BASE_URL", "\"https://api.flickr.com/\""
+        buildConfigField "String", "API_KEY", "\"568208aa893c4dc05f1c79766e178498\""
+
     }
     buildTypes {
         release {
@@ -46,10 +48,13 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.google.android.material:material:1.0.0'
 
-    // Dependency Injection
-    implementation 'org.koin:koin-android:1.0.2'
-    implementation 'org.koin:koin-androidx-scope:1.0.2'
-    implementation 'org.koin:koin-androidx-viewmodel:1.0.2'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // Dagger
+    def dagger_version = "2.21"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    compileOnly 'javax.annotation:jsr250-api:1.0'
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
