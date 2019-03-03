@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.flexbox.*
+import androidx.recyclerview.widget.GridLayoutManager
 import com.tigerspike.R
 import com.tigerspike.databinding.ActivityMainBinding
 import com.tigerspike.di.AppContext
@@ -41,15 +41,10 @@ class RecentActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        val flexboxLayoutManager = FlexboxLayoutManager(this).apply {
-            flexWrap = FlexWrap.WRAP
-            flexDirection = FlexDirection.ROW
-            justifyContent = JustifyContent.SPACE_AROUND
-            alignItems = AlignItems.BASELINE
-        }
+        val gridLayoutManager = GridLayoutManager(this, resources.getInteger(R.integer.galleryColumns))
         binding.recyclerView.apply {
             adapter = RecentAdapter(this@RecentActivity)
-            layoutManager = flexboxLayoutManager
+            layoutManager = gridLayoutManager
         }
     }
 

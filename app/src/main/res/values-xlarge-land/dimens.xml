@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <integer name="galleryColumns">6</integer>
+  <integer name="galleryColumns">10</integer>
 </resources>
