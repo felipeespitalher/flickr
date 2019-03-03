@@ -1,3 +1,4 @@
 <resources>
+    <dimen name="app_bar_height">180dp</dimen>
     <integer name="galleryColumns">2</integer>
 </resources>

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tigerspike">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
@@ -12,7 +14,8 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.recent.RecentActivity">
+            android:name=".ui.recent.RecentActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter>
 

@@ -6,7 +6,7 @@ import com.tigerspike.model.Photo
 object PhotoMapper {
 
     fun toPhoto(wrapper: PhotoWrapperOutput): List<Photo> {
-        return wrapper.photos.map {
+        return wrapper.photo.map {
             with(it) {
                 Photo(
                     farm,

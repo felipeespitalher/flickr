@@ -6,9 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.google.android.flexbox.*
 import com.tigerspike.R
 import com.tigerspike.databinding.ActivityMainBinding
 import com.tigerspike.di.AppContext
@@ -39,41 +37,36 @@ class RecentActivity : AppCompatActivity() {
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this, factory)[RecentViewModel::class.java]
         binding.viewModel = viewModel
+        viewModel.startUp()
     }
 
     private fun setupRecyclerView() {
+        val flexboxLayoutManager = FlexboxLayoutManager(this).apply {
+            flexWrap = FlexWrap.WRAP
+            flexDirection = FlexDirection.ROW
+            justifyContent = JustifyContent.SPACE_AROUND
+            alignItems = AlignItems.BASELINE
+        }
         binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@RecentActivity)
-//                .grid(resources.getInteger(R.integer.galleryColumns))
-
-            addDividers(this)
+            adapter = RecentAdapter(this@RecentActivity)
+            layoutManager = flexboxLayoutManager
         }
-    }
-
-    private fun addDividers(recyclerView: RecyclerView) {
-        val verticalDividerItemDecoration = DividerItemDecoration(
-            this, DividerItemDecoration.VERTICAL
-        ).apply {
-            setDrawable(resources.getDrawable(R.drawable.vertical_divider))
-        }
-        recyclerView.addItemDecoration(verticalDividerItemDecoration)
-
-        val horizontalDividerItemDecoration = DividerItemDecoration(
-            this, DividerItemDecoration.HORIZONTAL
-        ).apply {
-            setDrawable(resources.getDrawable(R.drawable.horizontal_divider))
-        }
-        recyclerView.addItemDecoration(horizontalDividerItemDecoration)
     }
 
     private fun observeEvents() {
 
-        viewModel.errorEvent.observe(this, EventObserver {
-            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+        viewModel.loadItems.observe(this, EventObserver {
+            val adapter = binding.recyclerView.adapter as RecentAdapter
+            adapter.addAll(it)
         })
 
-        viewModel.dataEvent.observe(this, EventObserver {
-            val adapter = binding.recyclerView.adapter
+        viewModel.refreshItems.observe(this, EventObserver {
+            val adapter = binding.recyclerView.adapter as RecentAdapter
+            adapter.refresh(it)
+        })
+
+        viewModel.errorEvent.observe(this, EventObserver {
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
         })
 
     }

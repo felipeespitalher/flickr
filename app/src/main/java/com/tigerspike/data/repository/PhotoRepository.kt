@@ -14,7 +14,7 @@ class PhotoRepository @Inject constructor(
         return flickrApi
             .fetchRecentPhotos()
             .map {
-                PhotoMapper.toPhoto(it)
+                PhotoMapper.toPhoto(it.photos)
             }
     }
 

@@ -1,9 +1,9 @@
 package com.tigerspike.model
 
 data class Photo(
-    val farm: Int,
-    val server: Int,
-    val id: Int,
-    val secret: Int,
+    val farm: String,
+    val server: String,
+    val id: String,
+    val secret: String,
     val title: String
 )
