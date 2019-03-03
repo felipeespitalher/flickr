@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.tigerspike.R
-import com.tigerspike.databinding.ActivityMainBinding
+import com.tigerspike.databinding.ActivityRecentBinding
 import com.tigerspike.di.AppContext
 import com.tigerspike.ui.commons.EventObserver
 import javax.inject.Inject
@@ -18,7 +18,7 @@ class RecentActivity : AppCompatActivity() {
     @Inject
     lateinit var factory: ViewModelProvider.Factory
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityRecentBinding
     private lateinit var viewModel: RecentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +31,7 @@ class RecentActivity : AppCompatActivity() {
     }
 
     private fun setupLayout() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_recent)
     }
 
     private fun setupViewModel() {

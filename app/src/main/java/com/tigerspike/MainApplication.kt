@@ -5,7 +5,7 @@ import com.facebook.drawee.backends.pipeline.Fresco
 import com.tigerspike.di.AppContext
 import com.tigerspike.di.DaggerAppComponent
 
-class MainApplication : Application() {
+open class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -13,11 +13,11 @@ class MainApplication : Application() {
         setupFresco()
     }
 
-    private fun setupDagger() {
+    internal open fun setupDagger() {
         AppContext.component = DaggerAppComponent.builder().build()
     }
 
-    private fun setupFresco(){
+    internal open fun setupFresco() {
         Fresco.initialize(this)
     }
 
