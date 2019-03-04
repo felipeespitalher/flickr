@@ -9,6 +9,7 @@ import androidx.databinding.ObservableField
 import com.tigerspike.R
 import com.tigerspike.model.Photo
 import com.tigerspike.ui.commons.BaseViewModel
+import com.tigerspike.ui.commons.SingleEventLiveData
 import com.tigerspike.ui.provider.ResourceProvider
 import javax.inject.Inject
 
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
         private val resourceProvider: ResourceProvider
 ) : BaseViewModel() {
-
+    val share = SingleEventLiveData<Unit>()
     val photo = ObservableField<Photo>()
     val title = ObservableField<String>()
     val farm = ObservableField<SpannableStringBuilder>()
@@ -39,6 +40,10 @@ class DetailViewModel @Inject constructor(
         builder.append(resourceProvider.getString(resource))
         builder.append(value, boldSpan, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         return builder
+    }
+
+    fun onSharedPressed() {
+        share.set(Unit)
     }
 
 }
