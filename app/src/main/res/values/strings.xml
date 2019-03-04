@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Flickr Sample</string>
 
+    <!-- Network Errors -->
+    <string name="network_error_http">Occurred an unexpected error with Flickr integration</string>
+    <string name="network_error_internet">Please, check our internet connection</string>
+
     <!-- Activity Detail -->
     <string name="activity_detail_share_title">Share an amazing picture</string>
     <string name="activity_detail_farm">Farm : </string>

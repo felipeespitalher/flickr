@@ -7,7 +7,7 @@ import io.reactivex.disposables.CompositeDisposable
 abstract class BaseViewModel : ViewModel() {
 
     val compositeDisposable = CompositeDisposable()
-    val errorEvent = SingleEventLiveData<String>()
+    val errorEvent = SingleEventLiveData<Int>()
 
     @CallSuper
     override fun onCleared() {
