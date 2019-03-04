@@ -27,7 +27,7 @@ class RecentViewModel @Inject constructor(
         adapter.listener = this
     }
 
-    fun startUp() {
+    fun setup() {
         loadPhotos()
                 .subscribeByEither(
                         onError = { error ->

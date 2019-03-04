@@ -1,5 +1,6 @@
 package com.tigerspike.ui.recent
 
+import android.widget.ImageView
 import androidx.lifecycle.Observer
 import com.tigerspike.MainApplicationMock
 import com.tigerspike.MockkTestHelper
@@ -25,9 +26,8 @@ class RecentViewModelTest : MockkTestHelper() {
     @get:Rule
     val sync = SynchronousTestSchedulerRule()
 
-    private val loadObserver: Observer<Event<List<Photo>>> = mockk(relaxed = true)
-    private val refreshObserver: Observer<Event<List<Photo>>> = mockk(relaxed = true)
-    private val errorObserver: Observer<Event<String>> = mockk(relaxed = true)
+    private val clickObserver: Observer<Event<Pair<Photo, ImageView>>> = mockk(relaxed = true)
+    private val errorObserver: Observer<Event<Int>> = mockk(relaxed = true)
 
     private val farm = "FARM"
     private val server = "SERVER"
@@ -36,44 +36,43 @@ class RecentViewModelTest : MockkTestHelper() {
     private val title = "TITLE"
 
     private val response = listOf(
-        Photo(
-            farm,
-            server,
-            id,
-            secret,
-            title
-        )
+            Photo(
+                    farm,
+                    server,
+                    id,
+                    secret,
+                    title
+            )
     )
-
     private val photoRepository: PhotoRepository = mockk()
-    private val subject = RecentViewModel(photoRepository)
+    private val adapter: RecentAdapter = mockk(relaxed = true)
+    private val subject = RecentViewModel(photoRepository, adapter)
 
     @Before
     fun setup() {
-        subject.loadItems.observe(mockLifecycleOwner(), loadObserver)
-        subject.refreshItems.observe(mockLifecycleOwner(), refreshObserver)
+
         subject.errorEvent.observe(mockLifecycleOwner(), errorObserver)
     }
 
     @Test
-    fun whenStartUp_andRepositoryReturnSuccess_mustFillResponseIntoLoadItems() {
+    fun whenSetup_andRepositoryReturnSuccess_mustFillResponseIntoLoadItems() {
         every { photoRepository.fetchRecentPhotos() } returns Single.just(response)
 
-        subject.startUp()
+        subject.setup()
 
         verify { photoRepository.fetchRecentPhotos() }
-        verify { loadObserver.onChanged(Event(response)) }
+        verify { adapter.addAll(response) }
         verify(inverse = true) { errorObserver.onChanged(any()) }
     }
 
     @Test
-    fun whenStartUp_andRepositoryReturnError_mustSetMessageIntoErrorEvent() {
+    fun whenSetup_andRepositoryReturnError_mustSetMessageIntoErrorEvent() {
         every { photoRepository.fetchRecentPhotos() } returns Single.error(RuntimeException())
 
-        subject.startUp()
+        subject.setup()
 
         verify { photoRepository.fetchRecentPhotos() }
-        verify(inverse = true) { loadObserver.onChanged(any()) }
+        verify(inverse = true) { adapter.addAll(any()) }
         verify { errorObserver.onChanged(any()) }
     }
 
@@ -84,7 +83,7 @@ class RecentViewModelTest : MockkTestHelper() {
         subject.onRefresh()
 
         verify { photoRepository.fetchRecentPhotos() }
-        verify { refreshObserver.onChanged(Event(response)) }
+        verify { adapter.refresh(response) }
         verify(inverse = true) { errorObserver.onChanged(any()) }
     }
 
@@ -95,8 +94,19 @@ class RecentViewModelTest : MockkTestHelper() {
         subject.onRefresh()
 
         verify { photoRepository.fetchRecentPhotos() }
-        verify(inverse = true) { refreshObserver.onChanged(any()) }
+        verify(inverse = true) { adapter.refresh(any()) }
         verify { errorObserver.onChanged(any()) }
+    }
+
+    @Test
+    fun whenItemClick_mustInvokeItemClickEvent() {
+        val photo: Photo = mockk()
+        val imageView: ImageView = mockk()
+        subject.itemClick.observe(mockLifecycleOwner(), clickObserver)
+
+        subject.onItemClick(photo, imageView)
+
+        verify { clickObserver.onChanged(Event(Pair(photo, imageView))) }
     }
 
 }

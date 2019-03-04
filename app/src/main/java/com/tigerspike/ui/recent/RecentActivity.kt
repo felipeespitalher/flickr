@@ -28,7 +28,7 @@ class RecentActivity : BaseActivity<ActivityRecentBinding, RecentViewModel>() {
         super.onCreate(savedInstanceState)
         setupRecyclerView()
         observeEvents()
-        viewModel.startUp()
+        viewModel.setup()
     }
 
     override fun providesViewModel(): RecentViewModel {
