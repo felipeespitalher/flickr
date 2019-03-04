@@ -9,14 +9,18 @@
             type="com.tigerspike.model.Photo" />
     </data>
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <com.tigerspike.ui.component.WrapContentDraweeView
         android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
+        android:clickable="true"
         android:contentDescription="@{item.title}"
+        android:focusable="true"
         android:minWidth="100dp"
         android:minHeight="75dp"
-        app:imageUrl="@{item}" />
+        android:padding="1dp"
+        android:scaleType="fitXY"
+        app:thumbs="@{item}" />
 
 </layout>

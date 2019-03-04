@@ -1,5 +1,6 @@
 package com.tigerspike.di
 
+import com.tigerspike.ui.detail.DetailActivity
 import com.tigerspike.ui.recent.RecentActivity
 import dagger.Component
 import javax.inject.Singleton
@@ -9,5 +10,6 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun inject(activity: RecentActivity)
+    fun inject(activity: DetailActivity)
 
 }

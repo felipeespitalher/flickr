@@ -1,7 +1,7 @@
 package com.tigerspike.ui.recent
 
+import android.widget.ImageView
 import androidx.databinding.ObservableBoolean
-import androidx.lifecycle.MutableLiveData
 import com.tigerspike.data.output.ErrorOutput
 import com.tigerspike.data.repository.PhotoRepository
 import com.tigerspike.model.Photo
@@ -16,12 +16,16 @@ import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject
 
 class RecentViewModel @Inject constructor(
-        private val photoRepository: PhotoRepository
-) : BaseViewModel() {
+        private val photoRepository: PhotoRepository,
+        val adapter: RecentAdapter
+) : BaseViewModel(), RecentAdapter.Listener {
 
-    val loadItems = SingleEventLiveData<List<Photo>>()
-    val refreshItems = SingleEventLiveData<List<Photo>>()
+    val itemClick = SingleEventLiveData<Pair<Photo, ImageView>>()
     val isLoading = ObservableBoolean()
+
+    init {
+        adapter.listener = this
+    }
 
     fun startUp() {
         loadPhotos()
@@ -32,7 +36,7 @@ class RecentViewModel @Inject constructor(
                             }
                         },
                         onSuccess = {
-                            loadItems.set(it)
+                            adapter.addAll(it)
                         }
                 )
                 .addTo(compositeDisposable)
@@ -47,7 +51,7 @@ class RecentViewModel @Inject constructor(
                             }
                         },
                         onSuccess = {
-                            refreshItems.set(it)
+                            adapter.refresh(it)
                         }
                 )
                 .addTo(compositeDisposable)
@@ -60,6 +64,10 @@ class RecentViewModel @Inject constructor(
                     this.isLoading.set(isLoading)
                 })
                 .compose(StepViewModel())
+    }
+
+    override fun onItemClick(photo: Photo, imageView: ImageView) {
+        itemClick.set(Pair(photo, imageView))
     }
 
 }
