@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Tigerspike</string>
+    <string name="app_name">Flickr Sample</string>
+
+    <!-- Activity Detail -->
+    <string name="activity_detail_farm">Farm : </string>
+    <string name="activity_detail_id">Id : </string>
+    <string name="activity_detail_server">Server : </string>
+    <string name="activity_detail_secret">Secret : </string>
 </resources>

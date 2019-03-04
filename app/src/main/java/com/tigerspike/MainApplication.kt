@@ -3,6 +3,7 @@ package com.tigerspike
 import android.app.Application
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.tigerspike.di.AppContext
+import com.tigerspike.di.AppModule
 import com.tigerspike.di.DaggerAppComponent
 
 open class MainApplication : Application() {
@@ -14,7 +15,10 @@ open class MainApplication : Application() {
     }
 
     internal open fun setupDagger() {
-        AppContext.component = DaggerAppComponent.builder().build()
+        AppContext.component = DaggerAppComponent
+                .builder()
+                .appModule(AppModule(this))
+                .build()
     }
 
     internal open fun setupFresco() {

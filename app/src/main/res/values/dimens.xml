@@ -1,4 +1,7 @@
 <resources>
+
     <dimen name="app_bar_height">180dp</dimen>
-    <integer name="galleryColumns">4</integer>
+
+    <!-- Activity Detail -->
+    <dimen name="activity_detail_padding_horizontal">30dp</dimen>
 </resources>

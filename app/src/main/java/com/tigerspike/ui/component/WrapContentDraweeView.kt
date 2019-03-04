@@ -4,6 +4,7 @@ package com.tigerspike.ui.component
 import android.content.Context
 import android.graphics.drawable.Animatable
 import android.util.AttributeSet
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.annotation.Nullable
 import androidx.databinding.BindingAdapter
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder
@@ -41,8 +42,19 @@ class WrapContentDraweeView : SimpleDraweeView {
     internal fun updateViewSize(@Nullable imageInfo: ImageInfo?) {
         if (imageInfo != null) {
             aspectRatio = imageInfo.width / imageInfo.height.toFloat()
-            layoutParams.width = imageInfo.width
-            layoutParams.height = imageInfo.height
+
+            if (WRAP_CONTENT == layoutParams.width) {
+                layoutParams.width = imageInfo.width
+            }
+
+            if (WRAP_CONTENT == layoutParams.height) {
+                layoutParams.height = if (minimumHeight > imageInfo.height) {
+                    minimumHeight
+                } else {
+                    imageInfo.height
+                }
+            }
+
             requestLayout()
         }
     }
