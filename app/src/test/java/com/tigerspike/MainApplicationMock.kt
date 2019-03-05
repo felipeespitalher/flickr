@@ -8,4 +8,8 @@ class MainApplicationMock : MainApplication() {
     override fun setupFresco() {
 
     }
+
+    override fun setupFabric() {
+
+    }
 }
